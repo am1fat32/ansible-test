@@ -1,0 +1,7 @@
+- hosts: vm
+  tasks:
+    - name: Uninstall git
+      ansible.builtin.apt:
+        name: git
+        state: absent
+      become: yes
