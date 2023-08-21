@@ -14,21 +14,25 @@
           - nodejs
         state: present
         update_cache: yes
+      tags: apps
       become: yes
 
     - name: Add 'arya' user
       ansible.builtin.user:
         name: arya
+      tags: users
       become: yes
 
     - name: Add 'sansa' user
       ansible.builtin.user:
         name: sansa
+      tags: users
       become: yes
 
     - name: Add 'tirion' user
       ansible.builtin.user:
         name: tirion
+      tags: users
       become: yes
 
 
