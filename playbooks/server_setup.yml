@@ -1,0 +1,34 @@
+---
+- hosts: vm
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+      become: yes
+
+    - name: Install initial packages
+      ansible.builtin.apt:
+        pkg:
+          - git
+          - make
+          - nodejs
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Add 'arya' user
+      ansible.builtin.user:
+        name: arya
+      become: yes
+
+    - name: Add 'sansa' user
+      ansible.builtin.user:
+        name: sansa
+      become: yes
+
+    - name: Add 'tirion' user
+      ansible.builtin.user:
+        name: tirion
+      become: yes
+
+
