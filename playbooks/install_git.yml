@@ -1,3 +1,4 @@
+---
 - hosts: vm
   tasks:
     - name: Install git
