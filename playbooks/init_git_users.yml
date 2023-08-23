@@ -2,26 +2,32 @@
 - hosts: vm
   vars:
     users:
-      - jaime
-      - sansa
-      - robert
+      jaime:
+        user_name: jaime
+        user_email: jaime@gmail.com
+      sansa:
+        user_name: sansa
+        user_email: sansa@yahoo.com
+      robert:
+        user_name: robert
+        user_email: robert@gmail.com
   tasks:
     - name: Create users
-      loop: "{{ users }}"
+      loop: "{{ lookup('ansible.builtin.dict', users) }}"
       ansible.builtin.user:
-        name: "{{ item }}"
+        name: "{{ item.value.user_name }}"
       become: yes
 
     - name: Copy authorized ssh
       ansible.posix.authorized_key:
         key: "{{ lookup('file', '../files/ansible.pub') }}"
-        user: "{{ item }}"
-      loop: "{{ users }}"
+        user: "{{ item.value.user_name }}"
+      loop: "{{ lookup('ansible.builtin.dict', users) }}"
       become: yes
 
     - name: Create git configs
-      loop: "{{ users }}"
+      loop: "{{ lookup('ansible.builtin.dict', users) }}"
       ansible.builtin.template:
         src: ../templates/gitconfig.j2
-        dest: "/home/{{ item }}/.gitconfig"
+        dest: "/home/{{ item.value.user_name }}/.gitconfig"
       become: yes
